@@ -44,7 +44,7 @@ newGameButton.on("click", e => {
 
     for(let i=0; i < initialCards; i++){
         showCard(getImageSrc(playerCards[i]), playerCardsElements[i]);
-
+        
         if(i < 1){
             showCard(getImageSrc(houseCards[i]), houseCardsElements[i]);
         } else {
@@ -66,7 +66,6 @@ hitButton.on("click", e => {
             playerCardsElements[playerCards.length - 1]);
     
     playerScore = getCurrentScore(playerCards);
-
     checkBlackJack(playerScore, "player");
     checkBust(playerScore, "player");
 });
@@ -78,7 +77,6 @@ standButton.on("click", e => {
             houseCardsElements[houseCards.length - 1]);
     
     houseScore = getCurrentScore(houseCards);
-
     checkBlackJack(houseScore, "house");
     checkBust(houseScore, "house");
 
@@ -99,8 +97,7 @@ standButton.on("click", e => {
         showCard(getImageSrc(houseCards[houseCards.length - 1]), 
                 houseCardsElements[houseCards.length - 1]);
         
-        houseScore = getCurrentScore(houseCards);
-    
+        houseScore = getCurrentScore(houseCards);    
         checkBlackJack(houseScore, "house");
         checkBust(houseScore, "house");
 
@@ -128,8 +125,7 @@ function checkBlackJack(scoreArray, identification){
                 break;
         }
 
-        messageP.text("BlackJack - You " + messageString + "!");
-        messageP.css("visibility", "visible");
+        showMsg("BlackJack - You " + messageString + "!");
         hideButtons([hitButton, standButton]);
     }
 }
@@ -155,8 +151,7 @@ function checkBust(scoreArray, identification){
                 break;
         }
 
-        messageP.text("Busted - You " + messageString + "!");
-        messageP.css("visibility", "visible");
+        showMsg("Busted - You " + messageString + "!");
         hideButtons([hitButton, standButton]);    
     }
 }
@@ -196,8 +191,7 @@ function checkWinner(playerScoreArray, houseScoreArray){
         messageString = "It's a DRAW";
     }
 
-    messageP.text(messageString + "!");
-    messageP.css("visibility", "visible");
+    showMsg(messageString + "!");
     hideButtons([hitButton, standButton]);
 }
 
@@ -288,4 +282,9 @@ function hideButtons(buttonsArray){
     buttonsArray.forEach(button => {
         button.css("visibility", "hidden")
     });
+}
+
+function showMsg(str){
+    messageP.text(str);
+    messageP.css("visibility", "visible");    
 }
