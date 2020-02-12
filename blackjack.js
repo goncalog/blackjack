@@ -287,10 +287,17 @@ function getImageSrc(imageStr){
 }
 
 function restartImageElements(imageElementsArrays){
-    let classArray = [".house-cards", ".player-cards"];    
+    let classArray = ["house-cards", "player-cards"];
 
     for(let i=0; i < imageElementsArrays.length; i++){
-        imageElementsArrays[i] = document.querySelectorAll(classArray[i]);
+        imageElementsArrays[i] = document.querySelectorAll("." + classArray[i]);
+        if(imageElementsArrays[i].length > 2){
+            for(let j=2; j < imageElementsArrays[i].length; j++){
+                document.getElementById(classArray[i]).children[2].remove();
+            }
+        }
+
+        imageElementsArrays[i] = document.querySelectorAll("." + classArray[i]);
         imageElementsArrays[i].forEach(card => {
             card.style.visibility = "hidden";
             card.setAttribute("src", "");
