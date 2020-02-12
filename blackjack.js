@@ -215,16 +215,12 @@ function showCard(imageSrc, cardElement){
 }
 
 function getCurrentScore(cardsArray){
-    let cardValuesArray = cardsArray.map(card => {
-        return dictCardValues[card[0]];
-    });
-    
-    let cardValuesSum = cardValuesArray.reduce((sum, value) => {
-        return sum + value;
+    let cardValuesSum = cardsArray.reduce((sum, card) => {
+        return sum + dictCardValues[card[0]];
     }, 0);
 
-    let numAces = cardValuesArray.reduce((acesCount, value) => {
-        if(value === 11){
+    let numAces = cardsArray.reduce((acesCount, card) => {
+        if(dictCardValues[card[0]] === 11){
             acesCount++;
         }
         return acesCount;
