@@ -72,8 +72,7 @@ hitButton.on("click", e => {
 });
 
 standButton.on("click", e => {
-    hitButton.css("visibility", "hidden");
-    standButton.css("visibility", "hidden");
+    hideButtons([hitButton, standButton]);
     
     showCard(getImageSrc(houseCards[houseCards.length - 1]), 
             houseCardsElements[houseCards.length - 1]);
@@ -131,8 +130,7 @@ function checkBlackJack(scoreArray, identification){
 
         messageP.text("BlackJack - You " + messageString + "!");
         messageP.css("visibility", "visible");
-        hitButton.css("visibility", "hidden");
-        standButton.css("visibility", "hidden");
+        hideButtons([hitButton, standButton]);
     }
 }
 
@@ -159,8 +157,7 @@ function checkBust(scoreArray, identification){
 
         messageP.text("Busted - You " + messageString + "!");
         messageP.css("visibility", "visible");
-        hitButton.css("visibility", "hidden");
-        standButton.css("visibility", "hidden");    
+        hideButtons([hitButton, standButton]);    
     }
 }
 
@@ -201,8 +198,7 @@ function checkWinner(playerScoreArray, houseScoreArray){
 
     messageP.text(messageString + "!");
     messageP.css("visibility", "visible");
-    hitButton.css("visibility", "hidden");
-    standButton.css("visibility", "hidden");
+    hideButtons([hitButton, standButton]);
 }
 
 function getInitialCards(){
@@ -286,4 +282,10 @@ function restartImageElements(imageElementsArrays){
     }
 
     return imageElementsArrays;
+}
+
+function hideButtons(buttonsArray){
+    buttonsArray.forEach(button => {
+        button.css("visibility", "hidden")
+    });
 }
