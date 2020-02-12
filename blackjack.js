@@ -22,24 +22,13 @@ const newGameButton = document.querySelector("#new-game");
 const hitButton = document.querySelector("#hit");
 const standButton = document.querySelector("#stand");
 
-const houseCardsDisplay = document.querySelectorAll(".house-cards");
-const playerCardsDisplay = document.querySelectorAll(".player-cards");
-
-const houseCardOne = document.querySelector("#house-cards #one");
-const houseCardTwo = document.querySelector("#house-cards #two");
-const houseCardThree = document.querySelector("#house-cards #three");
-const houseCardFour = document.querySelector("#house-cards #four");
-
-const playerCardOne = document.querySelector("#player-cards #one");
-const playerCardTwo = document.querySelector("#player-cards #two");
-const playerCardThree = document.querySelector("#player-cards #three");
-const playerCardFour = document.querySelector("#player-cards #four");
+let houseCardsElements;
+let playerCardsElements;
 
 let availableDeck = [];
 let playerCards = [];
 let houseCards = [];
-let houseCardsElements = [];
-let playerCardsElements = [];
+
 let playerScore = 0;
 let houseScore = 0;
 let houseCanPlay = true;
@@ -51,8 +40,7 @@ newGameButton.addEventListener("click", e => {
             "QC", "QD", "QH", "QS", "KC", "KD", "KH", "KS", "AC", "AD", "AH", "AS"];
     playerCards = [];
     houseCards = [];
-    houseCardsElements = [houseCardOne, houseCardTwo, houseCardThree, houseCardFour];
-    playerCardsElements = [playerCardOne, playerCardTwo, playerCardThree, playerCardFour];
+    
     playerScore = 0;
     houseScore = 0;
     houseCanPlay = true;
@@ -61,15 +49,8 @@ newGameButton.addEventListener("click", e => {
     standButton.style.visibility = "visible";
     messageP.style.visibility = "hidden";
 
-    houseCardsDisplay.forEach(card => {
-        card.style.visibility = "hidden";
-        card.setAttribute("src", "");
-    });
-
-    playerCardsDisplay.forEach(card => {
-        card.style.visibility = "hidden";
-        card.setAttribute("src", "");
-    });
+    [houseCardsElements, playerCardsElements] = 
+            restartImageElements([houseCardsElements, playerCardsElements]);
 
     [playerCards, houseCards] = getInitialCards();
 
@@ -93,6 +74,10 @@ newGameButton.addEventListener("click", e => {
 
 hitButton.addEventListener("click", e => {
     playerCards = addCard(playerCards);
+    
+    let parent = document.getElementById("player-cards");
+    parent.insertAdjacentHTML("beforeend", '<img class="player-cards">');
+    playerCardsElements = document.querySelectorAll(".player-cards");
     
     let imageSrc = getImageSrc(playerCards[playerCards.length - 1]);
     playerCardsElements[playerCards.length - 1].setAttribute("src", imageSrc);
@@ -127,6 +112,10 @@ standButton.addEventListener("click", e => {
     
     while(houseCanPlay){
         houseCards = addCard(houseCards);
+
+        let parent = document.getElementById("house-cards");
+        parent.insertAdjacentHTML("beforeend", '<img class="house-cards">');
+        houseCardsElements = document.querySelectorAll(".house-cards");
 
         let imageSrc = getImageSrc(houseCards[houseCards.length - 1]);
         houseCardsElements[houseCards.length - 1].setAttribute("src", imageSrc);
@@ -295,4 +284,18 @@ function getCurrentScore(cardsArray){
 
 function getImageSrc(imageStr){
     return "./images/" + imageStr + ".png";
+}
+
+function restartImageElements(imageElementsArrays){
+    let classArray = [".house-cards", ".player-cards"];    
+
+    for(let i=0; i < imageElementsArrays.length; i++){
+        imageElementsArrays[i] = document.querySelectorAll(classArray[i]);
+        imageElementsArrays[i].forEach(card => {
+            card.style.visibility = "hidden";
+            card.setAttribute("src", "");
+        });
+    }
+
+    return imageElementsArrays;
 }
