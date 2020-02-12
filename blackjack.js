@@ -43,17 +43,13 @@ newGameButton.on("click", e => {
     [playerCards, houseCards] = getInitialCards();
 
     for(let i=0; i < initialCards; i++){
-        let imageSrc = getImageSrc(playerCards[i]);
-        playerCardsElements[i].setAttribute("src", imageSrc);
-        showCard(playerCardsElements[i]);
+        showCard(getImageSrc(playerCards[i]), playerCardsElements[i]);
 
         if(i < 1){
-            imageSrc = getImageSrc(houseCards[i]);
-            houseCardsElements[i].setAttribute("src", imageSrc);
+            showCard(getImageSrc(houseCards[i]), houseCardsElements[i]);
         } else {
-            houseCardsElements[i].setAttribute("src", cardBack);
+            showCard(cardBack, houseCardsElements[i]);
         }
-        showCard(houseCardsElements[i]);         
     }
 
     playerScore = getCurrentScore(playerCards);
@@ -66,9 +62,8 @@ hitButton.on("click", e => {
     $("#player-cards").append('<img class="player-cards">');
     playerCardsElements = $(".player-cards");
     
-    let imageSrc = getImageSrc(playerCards[playerCards.length - 1]);
-    playerCardsElements[playerCards.length - 1].setAttribute("src", imageSrc);
-    showCard(playerCardsElements[playerCards.length - 1]);
+    showCard(getImageSrc(playerCards[playerCards.length - 1]), 
+            playerCardsElements[playerCards.length - 1]);
     
     playerScore = getCurrentScore(playerCards);
 
@@ -80,9 +75,8 @@ standButton.on("click", e => {
     hitButton.css("visibility", "hidden");
     standButton.css("visibility", "hidden");
     
-    let imageSrc = getImageSrc(houseCards[houseCards.length - 1]);
-    houseCardsElements[houseCards.length - 1].setAttribute("src", imageSrc);
-    showCard(houseCardsElements[houseCards.length - 1]);
+    showCard(getImageSrc(houseCards[houseCards.length - 1]), 
+            houseCardsElements[houseCards.length - 1]);
     
     houseScore = getCurrentScore(houseCards);
 
@@ -103,9 +97,8 @@ standButton.on("click", e => {
         $("#house-cards").append('<img class="house-cards">');
         houseCardsElements = $(".house-cards");
 
-        let imageSrc = getImageSrc(houseCards[houseCards.length - 1]);
-        houseCardsElements[houseCards.length - 1].setAttribute("src", imageSrc);
-        showCard(houseCardsElements[houseCards.length - 1]);
+        showCard(getImageSrc(houseCards[houseCards.length - 1]), 
+                houseCardsElements[houseCards.length - 1]);
         
         houseScore = getCurrentScore(houseCards);
     
@@ -237,7 +230,8 @@ function addCard(cardsArray){
     return cardsArray;
 }
 
-function showCard(cardElement){
+function showCard(imageSrc, cardElement){
+    $(cardElement).attr("src", imageSrc);
     $(cardElement).css("visibility", "visible");
 }
 
