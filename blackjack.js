@@ -167,21 +167,19 @@ function checkHouseCanPlay(scoreArray){
     return canPlay;
 }
 
+function getFinalScore(scoreArray){
+    return scoreArray.reduce((score, value) => {
+        if(value < 21 && value > score){
+            score = value;
+        }
+        return score;
+    }, 0);
+}
+
 function checkWinner(playerScoreArray, houseScoreArray){
-    let playerScore = playerScoreArray.reduce((score, value) => {
-        if(value < 21 && value > score){
-            score = value;
-        }
-        return score;
-    }, 0);
-
-    let houseScore = houseScoreArray.reduce((score, value) => {
-        if(value < 21 && value > score){
-            score = value;
-        }
-        return score;
-    }, 0);
-
+    let playerScore = getFinalScore(playerScoreArray);
+    let houseScore = getFinalScore(houseScoreArray);
+    
     let messageString = "";
     if(playerScore > houseScore){
         messageString = "You WIN";
