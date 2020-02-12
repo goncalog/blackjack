@@ -40,7 +40,7 @@ newGameButton.on("click", e => {
     [houseCardsElements, playerCardsElements] = 
             restartImageElements([houseCardsElements, playerCardsElements]);
 
-    [playerCards, houseCards] = getInitialCards();
+    [playerCards, houseCards] = getInitialCards(playerCards, houseCards);
 
     for(let i=0; i < initialCards; i++){
         showCard(getImageSrc(playerCards[i]), playerCardsElements[i]);
@@ -179,7 +179,7 @@ function getFinalScore(scoreArray){
 function checkWinner(playerScoreArray, houseScoreArray){
     let playerScore = getFinalScore(playerScoreArray);
     let houseScore = getFinalScore(houseScoreArray);
-    
+
     let messageString = "";
     if(playerScore > houseScore){
         messageString = "You WIN";
@@ -193,20 +193,11 @@ function checkWinner(playerScoreArray, houseScoreArray){
     hideButtons([hitButton, standButton]);
 }
 
-function getInitialCards(){
-    let playerArray = [];
-    let houseArray = [];
-
+function getInitialCards(playerArray, houseArray){
     for(let i=0; i < initialCards; i++){
-        let randomNumber = Math.floor(Math.random() * availableDeck.length);
-        playerArray.push(availableDeck[randomNumber]);
-        availableDeck.splice(randomNumber, 1);
-
-        randomNumber = Math.floor(Math.random() * availableDeck.length);
-        houseArray.push(availableDeck[randomNumber]);
-        availableDeck.splice(randomNumber, 1);
+        playerArray = addCard(playerArray);
+        houseArray = addCard(houseArray);
     }
-
     return [playerArray, houseArray];
 }
 
