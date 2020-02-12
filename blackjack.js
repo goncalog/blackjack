@@ -1,26 +1,14 @@
 const initialCards = 2;
 const houseMinScore = 17;
 const cardBack = "./images/card-back.jpeg"
-const dictCardValues = {
-    "2": 2,
-    "3": 3,
-    "4": 4,
-    "5": 5,
-    "6": 6,
-    "7": 7,
-    "8": 8,
-    "9": 9,
-    "1": 10,
-    "J": 10,
-    "Q": 10,
-    "K": 10,
-    "A": 11,
+const dictCardValues = { "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9, "1": 10,
+        "J": 10, "Q": 10, "K": 10, "A": 11, 
 }
 
-const messageP = document.querySelector("#message");
-const newGameButton = document.querySelector("#new-game");
-const hitButton = document.querySelector("#hit");
-const standButton = document.querySelector("#stand");
+const messageP = $("#message");
+const newGameButton = $("#new-game");
+const hitButton = $("#hit");
+const standButton = $("#stand");
 
 let houseCardsElements;
 let playerCardsElements;
@@ -33,7 +21,7 @@ let playerScore = 0;
 let houseScore = 0;
 let houseCanPlay = true;
 
-newGameButton.addEventListener("click", e => {
+newGameButton.on("click", e => {
     availableDeck = ["2C", "2D", "2H", "2S", "3C", "3D", "3H", "3S", "4C", "4D", "4H", "4S", 
             "5C", "5D", "5H", "5S", "6C", "6D", "6H", "6S", "7C", "7D", "7H", "7S", "8C", "8D", 
             "8H", "8S", "9C", "9D", "9H", "9S", "10C", "10D", "10H", "10S", "JC", "JD", "JH", "JS",
@@ -45,9 +33,9 @@ newGameButton.addEventListener("click", e => {
     houseScore = 0;
     houseCanPlay = true;
     
-    hitButton.style.visibility = "visible";
-    standButton.style.visibility = "visible";
-    messageP.style.visibility = "hidden";
+    hitButton.css("visibility", "visible");
+    standButton.css("visibility", "visible");
+    messageP.css("visibility", "hidden");
 
     [houseCardsElements, playerCardsElements] = 
             restartImageElements([houseCardsElements, playerCardsElements]);
@@ -72,12 +60,11 @@ newGameButton.addEventListener("click", e => {
     checkBlackJack(playerScore, "player");
 });
 
-hitButton.addEventListener("click", e => {
+hitButton.on("click", e => {
     playerCards = addCard(playerCards);
     
-    let parent = document.getElementById("player-cards");
-    parent.insertAdjacentHTML("beforeend", '<img class="player-cards">');
-    playerCardsElements = document.querySelectorAll(".player-cards");
+    $("#player-cards").append('<img class="player-cards">');
+    playerCardsElements = $(".player-cards");
     
     let imageSrc = getImageSrc(playerCards[playerCards.length - 1]);
     playerCardsElements[playerCards.length - 1].setAttribute("src", imageSrc);
@@ -89,9 +76,9 @@ hitButton.addEventListener("click", e => {
     checkBust(playerScore, "player");
 });
 
-standButton.addEventListener("click", e => {
-    hitButton.style.visibility = "hidden";
-    standButton.style.visibility = "hidden";
+standButton.on("click", e => {
+    hitButton.css("visibility", "hidden");
+    standButton.css("visibility", "hidden");
     
     let imageSrc = getImageSrc(houseCards[houseCards.length - 1]);
     houseCardsElements[houseCards.length - 1].setAttribute("src", imageSrc);
@@ -113,9 +100,8 @@ standButton.addEventListener("click", e => {
     while(houseCanPlay){
         houseCards = addCard(houseCards);
 
-        let parent = document.getElementById("house-cards");
-        parent.insertAdjacentHTML("beforeend", '<img class="house-cards">');
-        houseCardsElements = document.querySelectorAll(".house-cards");
+        $("#house-cards").append('<img class="house-cards">');
+        houseCardsElements = $(".house-cards");
 
         let imageSrc = getImageSrc(houseCards[houseCards.length - 1]);
         houseCardsElements[houseCards.length - 1].setAttribute("src", imageSrc);
@@ -150,10 +136,10 @@ function checkBlackJack(scoreArray, identification){
                 break;
         }
 
-        messageP.textContent = "BlackJack - You " + messageString + "!";
-        messageP.style.visibility = "visible";
-        hitButton.style.visibility = "hidden";
-        standButton.style.visibility = "hidden";
+        messageP.text("BlackJack - You " + messageString + "!");
+        messageP.css("visibility", "visible");
+        hitButton.css("visibility", "hidden");
+        standButton.css("visibility", "hidden");
     }
 }
 
@@ -178,10 +164,10 @@ function checkBust(scoreArray, identification){
                 break;
         }
 
-        messageP.textContent = "Busted - You " + messageString + "!";
-        messageP.style.visibility = "visible";
-        hitButton.style.visibility = "hidden";
-        standButton.style.visibility = "hidden";
+        messageP.text("Busted - You " + messageString + "!");
+        messageP.css("visibility", "visible");
+        hitButton.css("visibility", "hidden");
+        standButton.css("visibility", "hidden");    
     }
 }
 
@@ -220,10 +206,10 @@ function checkWinner(playerScoreArray, houseScoreArray){
         messageString = "It's a DRAW";
     }
 
-    messageP.textContent = messageString + "!";
-    messageP.style.visibility = "visible";
-    hitButton.style.visibility = "hidden";
-    standButton.style.visibility = "hidden";
+    messageP.text(messageString + "!");
+    messageP.css("visibility", "visible");
+    hitButton.css("visibility", "hidden");
+    standButton.css("visibility", "hidden");
 }
 
 function getInitialCards(){
@@ -252,7 +238,7 @@ function addCard(cardsArray){
 }
 
 function showCard(cardElement){
-    cardElement.style.visibility = "visible";
+    $(cardElement).css("visibility", "visible");
 }
 
 function getCurrentScore(cardsArray){
@@ -290,17 +276,18 @@ function restartImageElements(imageElementsArrays){
     let classArray = ["house-cards", "player-cards"];
 
     for(let i=0; i < imageElementsArrays.length; i++){
-        imageElementsArrays[i] = document.querySelectorAll("." + classArray[i]);
+        imageElementsArrays[i] = $("." + classArray[i]);
         if(imageElementsArrays[i].length > 2){
             for(let j=2; j < imageElementsArrays[i].length; j++){
                 document.getElementById(classArray[i]).children[2].remove();
             }
         }
 
-        imageElementsArrays[i] = document.querySelectorAll("." + classArray[i]);
-        imageElementsArrays[i].forEach(card => {
-            card.style.visibility = "hidden";
-            card.setAttribute("src", "");
+        imageElementsArrays[i] = $("." + classArray[i]);
+        imageElementsArrays[i].each(function() {
+            let card = $(this);
+            card.css("visibility", "hidden");
+            card.attr("src", "");
         });
     }
 
