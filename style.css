@@ -9,6 +9,7 @@ body {
 img {
     width: 70px;
     height: 90px;
+    margin: 0 3px;
 }
 
 button {
@@ -42,13 +43,9 @@ button:hover {
 }
 
 .cards {
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
+    display: inline;
+    min-width: 390px;
     margin: 20px 0;
-    grid-auto-flow: column;
-    grid-auto-columns: 1fr;
-    justify-content: center;
-    column-gap: 5px;
 }
 
 .game-buttons {
@@ -58,12 +55,14 @@ button:hover {
 #house-cards {
     grid-area: 1 / 2 / span 1 / span 1;
     visibility: hidden;
+    height: 135px;
 }
 
 #player-cards {
-    align-items: end;
     grid-area: 3 / 2 / span 1 / span 1;
     visibility: hidden;
+    height: 90px;
+    padding-top: 35px;
 }
 
 #message {
