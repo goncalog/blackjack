@@ -31,7 +31,7 @@ button:hover {
 
 .container {
     height: 400px;
-    min-width: 390px;
+    min-width: 470px;
     max-width: 33%;
     background-color: rgb(14, 121, 14);
     opacity: 0.95;
@@ -43,8 +43,8 @@ button:hover {
 }
 
 .cards {
-    display: inline;
-    min-width: 390px;
+    display: inline-block;
+    min-width: 470px;
     margin: 20px 0;
 }
 
