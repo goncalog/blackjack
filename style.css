@@ -30,10 +30,12 @@ button:hover {
 
 .container {
     height: 400px;
+    min-width: 390px;
+    max-width: 33%;
     background-color: rgb(14, 121, 14);
     opacity: 0.95;
-    margin: 25px 33%;
     padding: 10px;
+    margin: 25px auto;
     border-radius: 3px;
     display: grid;
     grid-template: 3fr 1fr 3fr / 2fr 1fr 2fr;
@@ -46,7 +48,7 @@ button:hover {
     grid-auto-flow: column;
     grid-auto-columns: 1fr;
     justify-content: center;
-    gap: 10px;
+    column-gap: 5px;
 }
 
 .game-buttons {
